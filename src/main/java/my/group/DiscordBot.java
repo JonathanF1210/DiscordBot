@@ -7,6 +7,9 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
@@ -20,12 +23,17 @@ public class DiscordBot {
     public DiscordBot() throws LoginException{
         config = Dotenv.configure().load();
         String token = config.get("TOKEN");
-        gatewayIntents = new GatewayIntent[]{GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_EMOJIS_AND_STICKERS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.SCHEDULED_EVENTS};
+        gatewayIntents = new GatewayIntent[]{GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.MESSAGE_CONTENT,
+                            GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_EMOJIS_AND_STICKERS, GatewayIntent.GUILD_VOICE_STATES,
+                            GatewayIntent.SCHEDULED_EVENTS, GatewayIntent.GUILD_PRESENCES};
 
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token, Arrays.asList(gatewayIntents));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing("Valorant-Top Fragging with classic only"));
         builder.build();
+        builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+        builder.setChunkingFilter(ChunkingFilter.ALL);
+        builder.enableCache(CacheFlag.ONLINE_STATUS);
         shardManager = builder.build();
 
         // Register listeners
