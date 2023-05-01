@@ -1,5 +1,6 @@
 package my.group;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
@@ -8,11 +9,13 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 import javax.security.auth.login.LoginException;
 
 public class DiscordBot {
-
+    private final Dotenv config;
     private final ShardManager shardManager;
 
     public DiscordBot() throws LoginException{
-        String token = "MTEwMjMwNjk0NDI1NTAwNDc1Mw.GOwFo7.PN4gQotbUh7s1n0QMaeh29SEoX_QynBHGwL1Io";
+        config = Dotenv.configure().load();
+        String token = config.get("TOKEN");
+
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing("Valorant-Top Fragging with classic only"));
@@ -20,6 +23,9 @@ public class DiscordBot {
         shardManager = builder.build();
     }
 
+    public Dotenv getConfig(){
+        return config;
+    }
     public ShardManager getShardManager() {
         return shardManager;
     }
