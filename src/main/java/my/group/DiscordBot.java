@@ -34,7 +34,7 @@ public class DiscordBot {
         try{
             DiscordBot bot = new DiscordBot();
         } catch (LoginException e){
-            System.out.println("Error: provided bot token is invalid!");
+            System.out.println("Error: Provided bot token is invalid!");
         }
     }
 }
