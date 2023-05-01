@@ -23,9 +23,11 @@ public class EventListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
        String message = event.getMessage().getContentRaw();
+        MessageChannel channel = event.getChannel();
        if (message.toLowerCase().contains("ping")){
-           MessageChannel channel = event.getChannel();
            channel.sendMessage("Pong!").queue();
+       } else if (message.toLowerCase().replaceAll(" ", "").contains("hellofirstbot")){
+           channel.sendMessage("Hello " + event.getMember().getEffectiveName()).queue();
        }
     }
 }
