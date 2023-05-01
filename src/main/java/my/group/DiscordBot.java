@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DiscordBot {
@@ -27,7 +26,8 @@ public class DiscordBot {
                             GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_EMOJIS_AND_STICKERS, GatewayIntent.GUILD_VOICE_STATES,
                             GatewayIntent.SCHEDULED_EVENTS, GatewayIntent.GUILD_PRESENCES};
 
-        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token, Arrays.asList(gatewayIntents));
+        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
+        builder.enableIntents(Arrays.asList(gatewayIntents));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing("Valorant-Top Fragging with classic only"));
         builder.build();
