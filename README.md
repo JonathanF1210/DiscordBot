@@ -1,6 +1,6 @@
 # Say Hello To FirstBot!
 
-        ![Alt FirstBot](botpic.jpeg)
+![Alt FirstBot](botpic.jpeg)
 
 FirstBot is my first ever Discord bot.
 
