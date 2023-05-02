@@ -1,5 +1,7 @@
 # Say Hello To FirstBot!
 
+![Alt FirstBot](botpic.jpeg)
+
 FirstBot is my first ever Discord bot.
 
 He's a bit of a work in progress, but I have laid down a great foundation to build on.
