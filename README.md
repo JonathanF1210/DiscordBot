@@ -6,7 +6,7 @@ He's a bit of a work in progress, but I have laid down a great foundation to bui
 
 # FirstBot Features:
 ## Event Listener
-* Responds with "Hello (_username_)" when a message that a member types contains "Hello FirstBot" in any channel. Ignoring caps and spaces.
+* Responds with "Hello (_username_)" when a message that a member types contains "Hello FirstBot". Ignoring caps and spaces.
 
 
 * When a member reacts to any message, FirstBot sends a message saying, "(_user_) reacted to a message with (_emoji reaction_) in the (_channel reaction occurred in_) channel!"
