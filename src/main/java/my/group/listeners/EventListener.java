@@ -1,6 +1,7 @@
 package my.group.listeners;
 
 import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
@@ -34,7 +35,7 @@ public class EventListener extends ListenerAdapter {
         String channelMention = event.getChannel().getAsMention();
 
         String message = user.getAsTag() + " reacted to a message with " + emoji + " in the " + channelMention + " channel!";
-        event.getGuild().getDefaultChannel().asStandardGuildMessageChannel().sendMessage(message).queue();
+        event.getGuild().getTextChannelsByName("bot-commands", true).get(0).sendMessage(message).queue();
     }
 
     @Override
@@ -78,32 +79,36 @@ public class EventListener extends ListenerAdapter {
         if (command.equalsIgnoreCase("welcome")) {
             String userTag = event.getUser().getAsTag();
             event.reply("Welcome to the server, ** " + userTag + "**!").setEphemeral(true).queue();
-        }else if (command.equalsIgnoreCase("roles")){
+        } else if (command.equalsIgnoreCase("roles")) {
             event.deferReply().queue();
             String response = "";
-            for (Role role : event.getGuild().getRoles()){
+            for (Role role : event.getGuild().getRoles()) {
                 response += role.getAsMention() + "\n";
             }
             event.getHook().sendMessage(response).setEphemeral(true).queue();
-        }
-        else if (command.equalsIgnoreCase("say")){
-            OptionMapping messageOption = event.getOption("message");
-            String message = messageOption.getAsString();
+        } else if (command.equalsIgnoreCase("say")) {
+            if (event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+                OptionMapping messageOption = event.getOption("message");
+                String message = messageOption.getAsString();
 
-            MessageChannel channel;
-            OptionMapping channelOption = event.getOption("channel");
-            if (channelOption != null) {
-                channel = channelOption.getAsChannel().asStandardGuildMessageChannel();
+                MessageChannel channel;
+                OptionMapping channelOption = event.getOption("channel");
+                if (channelOption != null) {
+                    channel = channelOption.getAsChannel().asStandardGuildMessageChannel();
+                } else {
+                    channel = event.getChannel();
+                }
+
+                channel.sendMessage(message).queue();
+                event.reply("Your message was sent!").setEphemeral(true).queue();
             } else {
-                channel = event.getChannel();
+                event.reply("You must be an administrator to use this command!").setEphemeral(true).queue();
             }
-
-            channel.sendMessage(message).queue();
-            event.reply("Your message was sent!").setEphemeral(true).queue();
         }
     }
 
-    @Override
+
+        @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         List<CommandData> commandData = new ArrayList<>();
         commandData.add(Commands.slash("welcome", "Get welcomed by the bot."));
