@@ -28,7 +28,7 @@ Message is sent to the "bot-commands" channel
 * **Roles Command** - Prints out a list of all roles in the server.
 * **Say Command** - Give FirstBot a message, and he will post the message on the channel the command was called from. 
 Has an optional channel parameter that dictates what channel FistBot will post the message  in.
-Sends a confirmation Ephemeral message that can be dismissed or disappears on its own after some time.
+Sends a confirmation Ephemeral message to the member that called the command.
 Member needs to have administrator permissions to use this command.
 
 
